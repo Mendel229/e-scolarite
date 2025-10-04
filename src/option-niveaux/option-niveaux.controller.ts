@@ -17,18 +17,18 @@ export class OptionNiveauxController {
     return this.optionNiveauxService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.optionNiveauxService.findOne(+id);
+  @Get(':optionId/:niveauId')
+  findOne(@Param('optionId') optionId: string, @Param('niveauId') niveauId: string) {
+    return this.optionNiveauxService.findOne(+optionId, +niveauId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOptionNiveauDto: UpdateOptionNiveauDto) {
-    return this.optionNiveauxService.update(+id, updateOptionNiveauDto);
+  @Patch(':optionId/:niveauId')
+  update(@Param('optionId') optionId: string, @Param('niveauId') niveauId: string, @Body() updateOptionNiveauDto: UpdateOptionNiveauDto) {
+    return this.optionNiveauxService.update(+optionId, +niveauId, updateOptionNiveauDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.optionNiveauxService.remove(+id);
+  @Delete(':optionId/:niveauId')
+  remove(@Param('optionId') optionId: string, @Param('niveauId') niveauId: string) {
+    return this.optionNiveauxService.remove(+optionId, +niveauId);
   }
 }

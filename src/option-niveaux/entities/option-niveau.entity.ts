@@ -1,13 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, Unique, JoinColumn } from "typeorm";
+import { Entity, PrimaryColumn, Column, ManyToOne, OneToMany, JoinColumn } from "typeorm";
 import { Option } from "src/options/entities/option.entity";
 import { Niveau } from "src/niveaux/entities/niveau.entity";
 import { Tranch } from "src/tranches/entities/tranch.entity";
+import { Etudiant } from "src/etudiants/entities/etudiant.entity";
 
 @Entity()
-@Unique(['option', 'niveau'])
 export class OptionNiveau {
-  @PrimaryGeneratedColumn()
-  id: number;
+
+  @PrimaryColumn()
+  optionId: number;
+
+  @PrimaryColumn()
+  niveauId: number;
 
   @ManyToOne(() => Option, (option) => option.optionNiveaux)
   @JoinColumn({ name: 'optionId' })
@@ -22,4 +26,7 @@ export class OptionNiveau {
 
   @OneToMany(() => Tranch, (tranche) => tranche.optionNiveau, { cascade: true })
   tranches: Tranch[];
+
+  @OneToMany(() => Etudiant, (etudiants) => etudiants.optionNiveau)
+  etudiants: Etudiant[];
 }

@@ -27,7 +27,7 @@ export class OptionsService {
       return new ApiResponse(false, null, `Filiere avec id ${createOptionDto.filiereId} introuvable`, 404);
     }
 
-    const option = await this.optionRepository.create({
+    const option = this.optionRepository.create({
       codeOpt: createOptionDto.codeOpt,
       libelleOpt: createOptionDto.libelleOpt,
       filiere: filiere,

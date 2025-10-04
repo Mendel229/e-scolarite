@@ -18,13 +18,15 @@ export class TranchesService {
     private optionNiveauRepository: Repository<OptionNiveau>,
   ){}
   async create(createTranchDto: CreateTranchDto): Promise<ApiResponse> {
+    const optionId = createTranchDto.optionId;
+    const niveauId = createTranchDto.NiveauId;
     const optionNiveau = await this.optionNiveauRepository.findOne({
-      where: {id: createTranchDto.optionNiveauId}
+      where:{optionId, niveauId}
     })
     if (!optionNiveau) {
-      return new ApiResponse(false, null, `Filiere avec id ${createTranchDto.optionNiveauId} introuvable`, 404);
+      return new ApiResponse(false, null, `OptionNiveau avec id ${createTranchDto.optionId} - ${createTranchDto.NiveauId} introuvable`, 404);
     }
-    const tranche = await this.trancheRepository.create({
+    const tranche = this.trancheRepository.create({
       nom: createTranchDto.nom,
       montantTranche: createTranchDto.montantTranche,
       dateLimitePaie: createTranchDto.dateLimitePaie,
@@ -62,12 +64,14 @@ export class TranchesService {
       return new ApiResponse(false, null, `Tranche avec id ${id} introuvable`, 404);
     }
 
+    const optionId = updateTranchDto.optionId;
+    const niveauId = updateTranchDto.NiveauId;
     const optionNiveau = await this.optionNiveauRepository.findOne({
-      where: { id: updateTranchDto.optionNiveauId },
+      where: { optionId, niveauId },
     });
 
     if (!optionNiveau) {
-      return new ApiResponse(false, null, `optionNiveau avec id ${updateTranchDto.optionNiveauId} introuvable`, 404);
+      return new ApiResponse(false, null, `optionNiveau avec id ${updateTranchDto.optionId, updateTranchDto.NiveauId} introuvable`, 404);
     }
 
     tranche.optionNiveau = optionNiveau;

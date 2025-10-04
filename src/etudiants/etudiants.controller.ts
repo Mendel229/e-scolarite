@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { EtudiantsService } from './etudiants.service';
 import { CreateEtudiantDto } from './dto/create-etudiant.dto';
 import { UpdateEtudiantDto } from './dto/update-etudiant.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('etudiants')
 export class EtudiantsController {
@@ -10,6 +11,12 @@ export class EtudiantsController {
   @Post()
   create(@Body() createEtudiantDto: CreateEtudiantDto) {
     return this.etudiantsService.create(createEtudiantDto);
+  }
+
+  @Post('import')
+  @UseInterceptors(FileInterceptor('file'))
+  async importCsv(@UploadedFile() file: Express.Multer.File) {
+    return this.etudiantsService.importEtudiantFromCSV(file);
   }
 
   @Get()

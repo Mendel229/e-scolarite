@@ -15,5 +15,9 @@ export class CreateTranchDto {
 
     @IsNotEmpty()
     @IsNumber()
-    optionNiveauId: number;
+    optionId: number;
+
+    @IsNotEmpty()
+    @IsNumber()
+    NiveauId: number;
 }

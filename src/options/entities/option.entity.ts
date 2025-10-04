@@ -19,7 +19,4 @@ export class Option {
 
     @ManyToOne(()=>Filiere, (filiere)=>filiere.options)
     filiere: Filiere;
-
-    @OneToMany(()=>Etudiant, (etudiants)=>etudiants.option)
-    etudiants: Etudiant[];
 }
